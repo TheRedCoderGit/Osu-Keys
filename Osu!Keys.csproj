@@ -131,6 +131,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="KeyEventUtility.cs" />
+    <Compile Include="LockBitmap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -163,11 +164,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="res\inputoverlay-key.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +186,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <Content Include="Icon.ico" />
+    <None Include="Resources\inputoverlay-key.png" />
     <Content Include="res\Icon.ico" />
     <Content Include="res\Icon.png" />
   </ItemGroup>

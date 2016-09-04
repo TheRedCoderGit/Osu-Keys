@@ -38,7 +38,7 @@ namespace Osu_Keys {
 
            // MessageBox.Show(String.Format("Loaded {0} Keys\r\n{1}", cfg.keys.Length, String.Join("\r\n", cfg.keys)), "Osu!Keys - Config");
             Key._keys = new List<string>(cfg.keys);
-            this.TopMost = cfg.always_on_top;
+            TopMost = cfg.always_on_top;
             Key.isVertical = cfg.vertical;
             Key.drawBorder = cfg.draw_border;
             foreach (String k in Key._keys) {
@@ -58,24 +58,17 @@ namespace Osu_Keys {
             new Key(this, contextMenuStrip1);
         }
 
+        private Control clicked;
+
         private void removeButtonToolStripMenuItem_Click(object sender, EventArgs e) {
-            Key k = null;
-            ToolStripItem menuItem = sender as ToolStripItem;
-            if (menuItem != null) {
-                ContextMenuStrip owner = menuItem.Owner as ContextMenuStrip;
-                if (owner != null) {
-                    try {
-                        k = (Key) owner.SourceControl;
-                    } catch {
-                        MessageBox.Show("Error!");
-                    }
-                }
-            }
+            if (clicked == null)
+                return;
             try {
-                Key.Keys.Remove(k);
+                Key k = (Key)clicked;
                 Key._keys.Remove(k.Text);
-                Controls.Remove(k);
+                Key.Keys.Remove(k);
                 Key.UpdateKeys();
+                Controls.Remove(k);
             } catch {
                 MessageBox.Show("Error!", "Osu!Keys");
             }
@@ -83,6 +76,7 @@ namespace Osu_Keys {
 
         private void contextMenuStrip1_Opened(object sender, EventArgs e) {
             ContextMenuStrip cms = (ContextMenuStrip)sender;
+            clicked = cms.SourceControl;
             foreach (ToolStripMenuItem item in cms.Items) {
                 item.Enabled = true;
                 item.ToolTipText = null;

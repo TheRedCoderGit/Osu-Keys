@@ -11,6 +11,8 @@ using System.Runtime.InteropServices;
 using Osu_Keys.Json_Structs;
 using Newtonsoft.Json;
 using System.IO;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace Osu_Keys {
 
@@ -23,6 +25,9 @@ namespace Osu_Keys {
         public static int position = 0;
         private static Form f;
         private Point Original;
+        private Bitmap OriginalImage;
+        private Bitmap[] Shrinked;
+        private Bitmap[] ShrinkedPressed;
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -38,7 +43,48 @@ namespace Osu_Keys {
 
         public Key(Form f, ContextMenuStrip cms)
             : base() {
-            this.BackColor = System.Drawing.Color.White;
+            //this.BackColor = System.Drawing.Color.White;
+            object O = Resources.ResourceManager.GetObject("inputoverlaykey");
+            this.Image = (Bitmap)O;
+            OriginalImage = (Bitmap)O;
+            Shrinked = new Bitmap[5];
+            for (int i = 0; i < 5; i++) {
+                Bitmap newImage = new Bitmap(50 - i * 2, 50 - i * 2);
+                using (Graphics gr = Graphics.FromImage(newImage)) {
+                    gr.SmoothingMode = SmoothingMode.HighQuality;
+                    gr.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    gr.DrawImage(OriginalImage, new Rectangle(0, 0, 50 - i * 2, 50 - i * 2));
+                }
+                Shrinked[i] = newImage;
+            }
+            ShrinkedPressed = new Bitmap[5];
+            for (int i = 0; i < 5; i++) {
+                Bitmap newImage = new Bitmap(50 - i * 2, 50 - i * 2);
+                using (Graphics gr = Graphics.FromImage(newImage)) {
+                    gr.SmoothingMode = SmoothingMode.HighQuality;
+                    gr.InterpolationMode = InterpolationMode.NearestNeighbor;
+                    gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    gr.DrawImage(OriginalImage, new Rectangle(0, 0, 50 - i * 2, 50 - i * 2));
+                }
+                ShrinkedPressed[i] = newImage;
+                Bitmap bmp = ShrinkedPressed[i];
+                LockBitmap lbmp = new LockBitmap(bmp);
+                LockBitmap lockBitmap = new LockBitmap(bmp);
+                lockBitmap.LockBits();
+                Color mask = Color.Yellow;
+                for (int y = 0; y < lockBitmap.Height; y++) {
+                    for (int x = 0; x < lockBitmap.Width; x++) {
+                        Color c = lockBitmap.GetPixel(x, y);
+                        if (c.A > 0 && !(c.R < 10 && c.G < 10 && c.B < 10)) {
+                            lockBitmap.SetPixel(x, y, Key.Blend(mask, lockBitmap.GetPixel(x, y), 10));
+                        }
+                    }
+                }
+                lockBitmap.UnlockBits();
+                ShrinkedPressed[i] = bmp;
+            }
+            //this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ContextMenuStrip = cms;
             this.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -47,7 +93,7 @@ namespace Osu_Keys {
             this.Name = "Key" + position;
             this.Size = new System.Drawing.Size(50, 50);
             this.MinimumSize = this.Size;
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
+            //Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
             this.AutoSize = true;
             this.TabIndex = 2;
             try {
@@ -89,26 +135,32 @@ namespace Osu_Keys {
         private int Shrink = 0;
         private int LastShrink = 0;
         private bool pressed = false;
-
-        private int moved = 0;
+        private bool lastPressed = false;
         public void _Update() {
             if (pressed)
                 Shrink = Math.Min(4, Shrink + 1);
+
             foreach (Control c in f.Controls)
                 if (c.Name.Equals("label1"))
                     ((Label)c).Text = Tint + "";
-            BackColor = Color.FromArgb(255, 255, 255, Tint);
+            //BackColor = Color.FromArgb(255, 255, 255, Tint);
             Tint = 255;
             if (LastShrink != Shrink) {
                 this.MinimumSize = new Size(50 - 2 * Shrink, 50 - 2 * Shrink);
-                Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
+                this.Image = pressed ? ShrinkedPressed[Shrink] : Shrinked[Shrink];
+                //Region.Dispose();
+                //Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 10, 10));
                 this.Location = new Point(Original.X + Shrink, Original.Y + Shrink);
             }
             LastShrink = Shrink;
-            if(!pressed)
+            if (lastPressed && !pressed && Shrink < 5)
+                Shrink = 5;
+            if (!lastPressed && pressed && Shrink > -1)
+                Shrink = 0;
+            if (!pressed)
                 Shrink = Math.Max(0, Shrink - 1);
+            lastPressed = pressed;
             pressed = false;
-            moved = Math.Max(0, moved - 1);
         }
 
         public void OnKeyPress() {
@@ -117,8 +169,6 @@ namespace Osu_Keys {
         }
 
         public void _MouseClick(object sender, MouseEventArgs e) {
-            if (moved != 0)
-                return;
             Focus();
             ForeColor = Color.Red;
             foreach (Key k in Keys)
@@ -138,7 +188,6 @@ namespace Osu_Keys {
             if (e.Button == MouseButtons.Left) {
                 f.Left += e.X - lastP.X;
                 f.Top += e.Y - lastP.Y;
-                moved = 5;
             }
         }
 
@@ -146,7 +195,7 @@ namespace Osu_Keys {
             if (ForeColor == Color.Red) {
                 try {
                     string txt = (KeyEventUtility.GetCharFromKey(KeyInterop.KeyFromVirtualKey(e.KeyValue)) + "").ToUpper();
-                    if(String.IsNullOrEmpty(txt) || String.IsNullOrWhiteSpace(txt))
+                    if (String.IsNullOrEmpty(txt) || String.IsNullOrWhiteSpace(txt))
                         txt = "null";
                     _keys[MyPosition()] = txt;
                     this.Text = _keys[MyPosition()];
@@ -159,7 +208,7 @@ namespace Osu_Keys {
 
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
-
+            return;
             if (!drawBorder)
                 return;
             int xy = 0;
@@ -176,6 +225,13 @@ namespace Osu_Keys {
             e.Graphics.DrawRectangle(pen, width - 1 - 2, height - 5, 1, 3);
             e.Graphics.DrawRectangle(pen, 1, height - 3, 3, 1);
             e.Graphics.DrawRectangle(pen, 1, height - 5, 1, 3);
+        }
+
+        private static Color Blend(Color color, Color backColor, double amount) {
+            byte r = (byte)((color.R * amount) + backColor.R * (1 - amount));
+            byte g = (byte)((color.G * amount) + backColor.G * (1 - amount));
+            byte b = (byte)((color.B * amount) + backColor.B * (1 - amount));
+            return Color.FromArgb(r, g, b);
         }
 
         private int MyPosition() {
@@ -198,10 +254,6 @@ namespace Osu_Keys {
             } catch {
                 return "Error";
             }
-        }
-
-        private void Popup(String message) {
-            System.Windows.Forms.MessageBox.Show(message);
         }
 
         public static void save() {
