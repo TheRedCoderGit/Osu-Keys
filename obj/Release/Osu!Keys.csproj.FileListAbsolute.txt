@@ -1,0 +1,12 @@
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\bin\Release\Osu!Keys.exe.config
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\bin\Release\Osu!Keys.exe
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\bin\Release\Osu!Keys.pdb
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\bin\Release\Newtonsoft.Json.dll
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\bin\Release\Newtonsoft.Json.xml
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu!Keys.csprojResolveAssemblyReference.cache
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu_Keys.Form1.resources
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu_Keys.Key.resources
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu_Keys.Properties.Resources.resources
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu!Keys.csproj.GenerateResource.Cache
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu!Keys.exe
+C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\Osu-Keys\obj\Release\Osu!Keys.pdb
