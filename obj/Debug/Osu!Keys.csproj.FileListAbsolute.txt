@@ -1,9 +1,0 @@
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\bin\Debug\Osu!Keys.exe.config
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\bin\Debug\Osu!Keys.exe
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\bin\Debug\Osu!Keys.pdb
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu!Keys.csprojResolveAssemblyReference.cache
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu_Keys.Form1.resources
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu_Keys.Properties.Resources.resources
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu!Keys.csproj.GenerateResource.Cache
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu!Keys.exe
-C:\Users\Shai\Desktop\Final Project\Final Project\Osu!Keys\Osu!Keys\obj\Debug\Osu!Keys.pdb
