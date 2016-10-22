@@ -1,0 +1,18 @@
+﻿Attempting to gather dependency information for package 'Fody.1.29.4' with respect to project 'Osu!Keys', targeting '.NETFramework,Version=v4.5'
+Attempting to resolve dependencies for package 'Fody.1.29.4' with DependencyBehavior 'Lowest'
+Resolving actions to install package 'Fody.1.29.4'
+Resolved actions to install package 'Fody.1.29.4'
+Executing script file 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages\Fody.1.28.3\Tools\uninstall.ps1'...
+Removed package 'Fody.1.28.3' from 'packages.config'
+Skipping 'C:\Users\Shai\Documents\Visual Studio 2015\Projects\Osu!Keys\FodyWeavers.xml' because it was modified.
+Successfully uninstalled 'Fody.1.28.3' from Osu!Keys
+Adding package 'Fody.1.29.4' to folder 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages'
+Added package 'Fody.1.29.4' to folder 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages'
+Overwriting existing file 'FodyWeavers.xml'..
+Added package 'Fody.1.29.4' to 'packages.config'
+Successfully installed 'Fody 1.29.4' to Osu!Keys
+Removing package 'Fody.1.28.3' from folder 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages'
+Access to the path 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages\Fody.1.28.3\Fody.dll' is denied.
+Access to the path 'Fody.dll' is denied.
+Removed package 'Fody.1.28.3' from folder 'c:\Users\Shai\documents\visual studio 2015\Projects\Osu!Keys\packages'
+========== Finished ==========
